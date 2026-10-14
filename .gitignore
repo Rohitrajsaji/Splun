@@ -1,0 +1,59 @@
+# Python & virtual environments
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Database files & state (Zero pre-seeded database binaries in repo)
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# Environment & Local Secrets
+.env
+.env.local
+*.local
+
+# System & Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary and export artifacts
+output.txt
+.ai-memory/
+.consultant/
+workspace/
+logs/
+.reference-repos/

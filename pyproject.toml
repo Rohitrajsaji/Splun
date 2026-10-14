@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "splun"
+version = "0.1.0"
+description = "Universal AI Project Memory, Triangulation & Autonomous Coordinator"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Rohit Raj Saji"}
+]
+keywords = [
+    "ai",
+    "project-management",
+    "memory",
+    "triangulation",
+    "mcp",
+    "autonomous-agent",
+    "sqlite",
+    "codebase-verification"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "openpyxl>=3.1.5",
+    "python-multipart>=0.0.9",
+    "httpx>=0.27.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "httpx>=0.27.0",
+    "playwright>=1.40.0"
+]
+
+[project.scripts]
+splun = "cli.consultant:main"
+splun-mcp = "cli.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["core*", "api*", "cli*"]
+
+[tool.setuptools.package-data]
+"core.storage" = ["*.sql"]
+"api" = ["static/*", "static/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+python_files = ["test_*.py"]
+

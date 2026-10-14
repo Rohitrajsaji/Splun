@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "project-consultant": {
+      "command": ".venv/bin/python",
+      "args": [
+        "cli/mcp_server.py",
+        "--db",
+        "consultant.db"
+      ]
+    }
+  }
+}
