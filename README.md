@@ -48,7 +48,7 @@ Every project fact is tagged with an epistemic confidence state:
 
 ### 5. Universal Portability & MCP Integration
 - **Portable `.ai-memory/` Compiler**: Compiles living project state into portable Markdown bundles (`PROJECT_STATE.md`, `DECISION_LOG.md`, `SKILL.md`) for version control.
-- **Zero-Dependency JSON-RPC 2.0 MCP Server**: Exposes Splun capabilities via stdio to Antigravity, Claude Code, and Cursor (`cli/mcp_server.py`), providing tools like `consultant_query`, `consultant_status`, `consultant_triangulate`, and `consultant_propose_mutation`.
+- **Zero-Dependency JSON-RPC 2.0 MCP Server**: Exposes Splun capabilities via stdio to Antigravity, Claude Code, and Cursor (`cli/mcp_server.py`), registering 8 tools: `consultant_status`, `consultant_next_scenarios`, `consultant_agenda`, `consultant_triangulate`, `consultant_handoff`, `consultant_chat_update`, `consultant_verify_git`, and `consultant_coordinator_plan`.
 
 ### 6. Autonomous Coordinator
 The autonomous coordinator engine analyzes candidate scenarios:
@@ -184,24 +184,39 @@ Inspect project status, query unblocked work, or generate agent handoffs directl
 
 ```bash
 # Display project scenarios and completion metrics
-.venv/bin/python cli/consultant.py status --project warehouse-72
+.venv/bin/python cli/consultant.py --project warehouse-72 status
 
 # Retrieve next unblocked scenarios ready for implementation
-.venv/bin/python cli/consultant.py next --project warehouse-72 --limit 5
+.venv/bin/python cli/consultant.py --project warehouse-72 next --limit 5
 
 # View open stakeholder clarification questions and blockers
-.venv/bin/python cli/consultant.py agenda --project warehouse-72
+.venv/bin/python cli/consultant.py --project warehouse-72 agenda
 
 # Generate agent Markdown handoff specification
-.venv/bin/python cli/consultant.py handoff --project warehouse-72 --scenarios SC-004,SC-005
+.venv/bin/python cli/consultant.py --project warehouse-72 handoff --scenarios SC-004,SC-005
+
+# Or set CONSULTANT_PROJECT in your environment for shorthand invocations:
+# export CONSULTANT_PROJECT=warehouse-72
+# .venv/bin/python cli/consultant.py status
 ```
 
 ### 4. Model Context Protocol (MCP) Integration
-Splun includes an MCP server that integrates with Claude Code, Cursor, and Antigravity:
+Splun includes a zero-dependency JSON-RPC 2.0 MCP stdio server compatible with Claude Code, Cursor, and Antigravity:
 
 ```bash
 make mcp
+# Or: .venv/bin/python cli/mcp_server.py --db consultant.db
 ```
+
+The MCP server exposes 8 deterministic tools:
+1. `consultant_status`: Get overall project status report, scenario progress breakdown, and active blockers.
+2. `consultant_next_scenarios`: Get next unblocked scenarios ready for implementation in priority order.
+3. `consultant_agenda`: Get stakeholder agenda items, unresolved claim discrepancies, and blocked scenarios.
+4. `consultant_triangulate`: Triangulate a scenario against BRD requirements, code AST symbols, and decisions.
+5. `consultant_handoff`: Generate agent Markdown handoff spec for Cursor, Claude Code, or Antigravity.
+6. `consultant_chat_update`: Send a chat turn to update conversational memory (status, blockers, decisions).
+7. `consultant_verify_git`: Auto-verify scenarios using a git commit diff or patch text.
+8. `consultant_coordinator_plan`: Build deterministic Autonomous Coordinator execution plan (batches and escalations).
 
 To configure in your IDE or agent, copy `.mcp.json.example` to `.mcp.json`:
 

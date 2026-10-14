@@ -54,7 +54,7 @@ On fresh clone, the database starts empty. You can click **Load Warehouse 72 Dem
 ### Command Line Interface
 ```bash
 .venv/bin/python cli/consultant.py --help
-.venv/bin/python cli/consultant.py status --project warehouse-72
+.venv/bin/python cli/consultant.py --project warehouse-72 status
 ```
 
 ### Model Context Protocol (MCP) Server
